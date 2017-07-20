@@ -16,7 +16,7 @@ def main(wf):
     if len(comps) > 1:
         filter = comps[1]
 
-    if "http" not in url:
+    if "://" not in url:
         url = "http://" + url
 
     parse_result = urlparse(url)
@@ -31,9 +31,10 @@ def main(wf):
 
             for key, value in qs_result:
                 wf.add_item(title=key,
-                            subtitle=value,
-                            arg=value,
-                            valid=True)
+                            subtitle=value.encode('latin_1').decode('utf-8'),
+                            arg=value.encode('latin_1').decode('utf-8'),
+                            valid=True,
+                            largetext=value.encode('latin_1').decode('utf-8'))
 
     # wf.add_item(title="%s" % wf.args,
     #             subtitle="%s" % len(wf.args),
